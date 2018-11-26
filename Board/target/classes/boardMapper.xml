@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.board">
+  <select id="select" resultType="com.spring.board.domain.BoardVO">
+    <!-- 글1건 가져오는 처리,  마이바티스에서 변수처리 : #{bNum} ,  리턴타입 : resultType="com.spring.board.domain.BoardVO" -->
+    SELECT bNum, bTitle, bContent, bWriteDate, bReadCount, userID FROM board WHERE bNum = #{bNum}
+  </select>
+  
+  <select id="list" resultType="com.spring.board.domain.BoardVO">
+    <!-- 글 전체 가져오는 처리 리턴타입 : resultType="com.spring.board.domain.BoardVO" -->
+	<!-- list paging처리  SELECT bNum, bTitle, bContent, bWriteDate, bReadCount, userID FROM board ORDER BY bNum DESC 
+		1page -> 0,5  2page -> 5,5   3page 10,5  ==> (page-1)*5 BoardDAOImpl의 list메소드에서 적용 -->
+	SELECT bNum, bTitle, bContent, bWriteDate, bReadCount, userID FROM board ORDER BY bNum DESC limit #{startNum}, 5
+  </select>
+  
+  <insert id="insert">
+    <!-- 글 추가하기 처리, now() : 현재시간을 가져옮-->
+    INSERT INTO board(bTitle, bContent, bWriteDate, userID) VALUE(#{bTitle}, #{bContent}, now(), "admin");
+  </insert> 
+  
+  <update id="update">
+  	UPDATE board SET bTitle = #{bTitle}, bContent = #{bContent} WHERE bNum = #{bNum}
+  </update>
+   
+  <update id="updateReadCount">
+  	UPDATE board SET bReadCount = bReadCount + 1 WHERE bNum = #{bNum}
+  </update>
+  
+  <delete id="delete">
+  	DELETE FROM board WHERE bNUM = #{bNum}  	
+  </delete>
+
+</mapper>
