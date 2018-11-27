@@ -20,12 +20,15 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+<!-- 제어의 역행 : 프레임워크(spring)가 대신 만들어서 관리한다(내가 객체관리를 하지 않는다)-> xml파일이 아래의 문장을 처리한다는의미
+	import org.springframework.web.servlet.view
 	
-	<!-- 메모리에 띠우기 위한 스캔작업 @을 찾아 : 하지않으면 메모리에 상주하지 않는다 
-	  context여러개 일경우 상위경로로 1번만	<context:component-scan base-package="com.spring.board" /> -->
-	<context:component-scan base-package="com.spring.board.controller" />
-	<context:component-scan base-package="com.spring.board.persistent" />	
-	<context:component-scan base-package="com.spring.board.service" />
+	InternalResourceViewResolver iv = new InternalResourceViewResolver();
+	iv.setPrefix("/WEB-INF/views/");
+	iv.setSuffix(".jsp"); -->
+	
+	<context:component-scan base-package="com.cos.controller" />
+	
 	
 	
 </beans:beans>
